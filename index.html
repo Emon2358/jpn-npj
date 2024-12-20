@@ -9,55 +9,71 @@
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f7fc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
-      text-align: center;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+      height: 100vh;
     }
 
     #app {
-      width: 80%;
-      max-width: 1200px;
-      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
     }
 
     .header h1 {
       font-size: 3rem;
       color: #333;
+      margin: 0;
+      padding: 20px 0;
     }
 
     .header p {
       font-size: 1.5rem;
       color: #666;
+      margin: 10px 0 20px;
     }
 
     .social-links {
       margin-top: 30px;
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 40px;
+      position: relative;
+      z-index: 20;
     }
 
     .social-icon {
-      width: 48px;
+      width: 60px;
+      height: 60px;
       cursor: pointer;
-      transition: transform 0.3s ease-in-out;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+      border-radius: 50%;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .social-icon:hover {
       transform: scale(1.2);
+      box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
     }
 
     .profile {
       margin-top: 40px;
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.9);
       padding: 30px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
       max-width: 600px;
-      margin: 30px auto;
+      text-align: center;
+      position: relative;
+      z-index: 30;
     }
 
     #profile-image {
@@ -65,6 +81,7 @@
       height: 150px;
       border-radius: 50%;
       margin-bottom: 20px;
+      border: 4px solid #fff;
     }
 
     #profile-name {
@@ -79,9 +96,55 @@
       max-width: 500px;
       margin: 0 auto;
     }
+
+    /* 背景の立体的な丸と棒 */
+    .background-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      perspective: 1000px; /* 3D空間の遠近感を出す */
+    }
+
+    .circle {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: black;
+      opacity: 0.8;
+      transform-style: preserve-3d;
+      animation: rotateCircle 10s infinite linear;
+    }
+
+    .line {
+      position: absolute;
+      width: 4px;
+      height: 200px;
+      background-color: black;
+      opacity: 0.8;
+      transform-style: preserve-3d;
+      animation: rotateLine 10s infinite linear;
+    }
+
+    @keyframes rotateCircle {
+      0% { transform: translate3d(0, 0, 0) rotateY(0deg) rotateX(0deg); }
+      100% { transform: translate3d(0, 0, 300px) rotateY(360deg) rotateX(360deg); }
+    }
+
+    @keyframes rotateLine {
+      0% { transform: translate3d(0, 0, 0) rotateY(0deg) rotateX(0deg); }
+      100% { transform: translate3d(0, 0, 300px) rotateY(360deg) rotateX(360deg); }
+    }
   </style>
 </head>
 <body>
+  <!-- 背景の立体的な丸と棒 -->
+  <div class="background-elements" id="background-elements"></div>
+
   <div id="app">
     <!-- ヘッダー -->
     <div class="header">
@@ -137,6 +200,29 @@
       .catch(error => {
         console.error("GitHub APIからのデータ取得に失敗しました:", error);
       });
+
+    // 背景にランダムに立体的な丸と線を生成
+    function generateBackgroundElements() {
+      const backgroundElements = document.getElementById('background-elements');
+      for (let i = 0; i < 20; i++) {
+        let elementType = Math.random() > 0.5 ? 'circle' : 'line';
+        let element = document.createElement('div');
+        element.classList.add(elementType);
+
+        // ランダムな位置を設定
+        element.style.left = `${Math.random() * 100}vw`;
+        element.style.top = `${Math.random() * 100}vh`;
+
+        // ランダムなZ軸の深さを設定
+        const zDepth = Math.random() * 500;  // 深さをランダムに設定
+        element.style.transform += `translate3d(0, 0, ${zDepth}px)`;
+
+        backgroundElements.appendChild(element);
+      }
+    }
+
+    // ページが読み込まれた時に背景要素を生成
+    window.onload = generateBackgroundElements;
   </script>
 </body>
 </html>
