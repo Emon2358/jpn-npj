@@ -8,7 +8,8 @@
     /* 全体のレイアウト */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(145deg, #d9e2f3, #f4f7fc);
+      background-color: black;
+      color: white;
       margin: 0;
       padding: 0;
       display: flex;
@@ -16,7 +17,6 @@
       align-items: center;
       height: 100vh;
       overflow: hidden;
-      color: #333;
     }
 
     #app {
@@ -28,8 +28,8 @@
       align-items: center;
       flex-direction: column;
       text-align: center;
-      box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
-      background-color: white;
+      box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.3);
+      background-color: black;
       border-radius: 12px;
       padding: 40px;
     }
@@ -37,14 +37,14 @@
     /* ヘッダー */
     .header h1 {
       font-size: 3rem;
-      color: #4a90e2;
+      color: white;
       margin-bottom: 20px;
       transition: transform 0.3s ease;
     }
 
     .header p {
       font-size: 1.2rem;
-      color: #666;
+      color: #bbb;
       margin-bottom: 30px;
     }
 
@@ -56,15 +56,15 @@
     .profile {
       width: 100%;
       text-align: center;
-      background: #fff;
+      background: black;
       padding: 25px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
       border-radius: 10px;
       transition: all 0.3s ease;
     }
 
     .profile:hover {
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
       transform: translateY(-5px);
     }
 
@@ -73,21 +73,28 @@
       height: 120px;
       border-radius: 50%;
       margin-bottom: 20px;
-      border: 5px solid #fff;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      border: 5px solid black;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
     }
 
     #profile-name {
       font-size: 2rem;
       font-weight: bold;
-      color: #4a90e2;
+      color: white;
       margin-bottom: 10px;
+      display: inline-block;
+      border-right: 2px solid white;
+      padding-right: 5px;
+      white-space: nowrap;
     }
 
     #profile-bio {
-      font-size: 1rem;
-      color: #777;
-      margin-bottom: 20px;
+      font-size: 1.2rem;
+      color: #bbb;
+      margin-top: 20px;
+      min-height: 30px;
+      border-right: 2px solid white;
+      padding-right: 5px;
     }
 
     /* ソーシャルリンク */
@@ -104,13 +111,35 @@
       border-radius: 50%;
       cursor: pointer;
       transition: all 0.3s ease;
-      border: 2px solid #fff;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      border: 2px solid white;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     }
 
     .social-icon:hover {
       transform: scale(1.2);
-      box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Typerアニメーション */
+    .typing-effect {
+      display: inline-block;
+      border-right: 3px solid #fff;
+      animation: typing 2s steps(20) 1s forwards, blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
     }
 
     /* ボタンとリンクのスタイル */
@@ -151,7 +180,7 @@
     <div class="profile">
       <div id="profile-info">
         <img id="profile-image" src="" alt="Profile Image" />
-        <h2 id="profile-name">Loading...</h2>
+        <h2 id="profile-name" class="typing-effect">Loading...</h2>
         <p id="profile-bio" class="loading">Fetching bio...</p>
       </div>
     </div>
