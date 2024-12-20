@@ -7,55 +7,104 @@
   <style>
     /* 全体のレイアウト */
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f7fc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(145deg, #d9e2f3, #f4f7fc);
       margin: 0;
       padding: 0;
-      overflow: hidden;
-      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
+      overflow: hidden;
+      color: #333;
     }
 
     #app {
-      position: relative;
-      z-index: 10;
       width: 100%;
-      height: 100%;
+      max-width: 800px;
+      height: auto;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       text-align: center;
+      box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+      background-color: white;
+      border-radius: 12px;
+      padding: 40px;
     }
 
+    /* ヘッダー */
     .header h1 {
       font-size: 3rem;
-      color: #333;
-      margin: 0;
-      padding: 20px 0;
+      color: #4a90e2;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
     }
 
     .header p {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       color: #666;
-      margin: 10px 0 20px;
+      margin-bottom: 30px;
     }
 
+    .header h1:hover {
+      transform: translateY(-5px);
+    }
+
+    /* プロフィールセクション */
+    .profile {
+      width: 100%;
+      text-align: center;
+      background: #fff;
+      padding: 25px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .profile:hover {
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+    }
+
+    #profile-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      border: 5px solid #fff;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #profile-name {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #4a90e2;
+      margin-bottom: 10px;
+    }
+
+    #profile-bio {
+      font-size: 1rem;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    /* ソーシャルリンク */
     .social-links {
-      margin-top: 30px;
       display: flex;
       justify-content: center;
-      gap: 40px;
-      position: relative;
-      z-index: 20;
+      gap: 30px;
+      margin-top: 40px;
     }
 
     .social-icon {
-      width: 60px;
-      height: 60px;
-      cursor: pointer;
-      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid #fff;
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
@@ -64,86 +113,32 @@
       box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
     }
 
-    .profile {
-      margin-top: 40px;
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 30px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      border-radius: 12px;
-      max-width: 600px;
-      text-align: center;
-      position: relative;
-      z-index: 30;
-    }
-
-    #profile-image {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      margin-bottom: 20px;
-      border: 4px solid #fff;
-    }
-
-    #profile-name {
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    #profile-bio {
+    /* ボタンとリンクのスタイル */
+    a, button {
       font-size: 1.2rem;
-      color: #666;
-      max-width: 500px;
-      margin: 0 auto;
+      padding: 10px 20px;
+      background-color: #4a90e2;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin-top: 20px;
     }
 
-    /* 背景の立体的な丸と棒 */
-    .background-elements {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      pointer-events: none;
-      z-index: 0;
-      perspective: 1000px; /* 3D空間の遠近感を出す */
+    a:hover, button:hover {
+      background-color: #357ab7;
+      transform: translateY(-2px);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .circle {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background-color: black;
-      opacity: 0.8;
-      transform-style: preserve-3d;
-      animation: rotateCircle 10s infinite linear;
-    }
-
-    .line {
-      position: absolute;
-      width: 4px;
-      height: 200px;
-      background-color: black;
-      opacity: 0.8;
-      transform-style: preserve-3d;
-      animation: rotateLine 10s infinite linear;
-    }
-
-    @keyframes rotateCircle {
-      0% { transform: translate3d(0, 0, 0) rotateY(0deg) rotateX(0deg); }
-      100% { transform: translate3d(0, 0, 300px) rotateY(360deg) rotateX(360deg); }
-    }
-
-    @keyframes rotateLine {
-      0% { transform: translate3d(0, 0, 0) rotateY(0deg) rotateX(0deg); }
-      100% { transform: translate3d(0, 0, 300px) rotateY(360deg) rotateX(360deg); }
+    /* ローディングエフェクト */
+    .loading {
+      font-size: 1.5rem;
+      color: #888;
     }
   </style>
 </head>
 <body>
-  <!-- 背景の立体的な丸と棒 -->
-  <div class="background-elements" id="background-elements"></div>
 
   <div id="app">
     <!-- ヘッダー -->
@@ -152,19 +147,23 @@
       <p>Welcome to my personal profile page</p>
     </div>
 
-    <!-- GitHub と YouTube のアイコン -->
-    <div class="social-links">
-      <img id="github-icon" class="social-icon" src="https://img.icons8.com/?size=48&id=AZOZNnY73haj&format=png" alt="GitHub Icon">
-      <img id="youtube-icon" class="social-icon" src="https://cdn-icons-png.flaticon.com/128/1384/1384028.png" alt="YouTube Icon">
+    <!-- プロフィールセクション -->
+    <div class="profile">
+      <div id="profile-info">
+        <img id="profile-image" src="" alt="Profile Image" />
+        <h2 id="profile-name">Loading...</h2>
+        <p id="profile-bio" class="loading">Fetching bio...</p>
+      </div>
     </div>
 
-    <!-- GitHub プロフィール表示エリア -->
-    <div id="github-profile" class="profile">
-      <div id="profile-info">
-        <img id="profile-image" src="" alt="Profile Image">
-        <h2 id="profile-name"></h2>
-        <p id="profile-bio"></p>
-      </div>
+    <!-- ソーシャルメディアリンク -->
+    <div class="social-links">
+      <a href="https://github.com/Emon2358" target="_blank">
+        <img class="social-icon" src="https://img.icons8.com/?size=48&id=AZOZNnY73haj&format=png" alt="GitHub" />
+      </a>
+      <a href="https://www.youtube.com/@unkochan12345" target="_blank">
+        <img class="social-icon" src="https://cdn-icons-png.flaticon.com/128/1384/1384028.png" alt="YouTube" />
+      </a>
     </div>
   </div>
 
@@ -174,15 +173,6 @@
 
     // GitHub APIのURL
     const githubApiUrl = `https://api.github.com/users/${githubUsername}`;
-
-    // アイコンのクリックイベント
-    document.getElementById("github-icon").addEventListener("click", () => {
-      window.location.href = "https://github.com/Emon2358";
-    });
-
-    document.getElementById("youtube-icon").addEventListener("click", () => {
-      window.location.href = "https://www.youtube.com/@unkochan12345";
-    });
 
     // GitHub APIからプロフィール情報を取得して表示
     fetch(githubApiUrl)
@@ -196,33 +186,13 @@
         profileImage.src = data.avatar_url;
         profileName.textContent = data.name || data.login; // 名前がない場合はユーザー名を表示
         profileBio.textContent = data.bio || "自己紹介はありません"; // 自己紹介がない場合のデフォルト文
+
+        // ローディングテキストを消す
+        profileBio.classList.remove("loading");
       })
       .catch(error => {
         console.error("GitHub APIからのデータ取得に失敗しました:", error);
       });
-
-    // 背景にランダムに立体的な丸と線を生成
-    function generateBackgroundElements() {
-      const backgroundElements = document.getElementById('background-elements');
-      for (let i = 0; i < 20; i++) {
-        let elementType = Math.random() > 0.5 ? 'circle' : 'line';
-        let element = document.createElement('div');
-        element.classList.add(elementType);
-
-        // ランダムな位置を設定
-        element.style.left = `${Math.random() * 100}vw`;
-        element.style.top = `${Math.random() * 100}vh`;
-
-        // ランダムなZ軸の深さを設定
-        const zDepth = Math.random() * 500;  // 深さをランダムに設定
-        element.style.transform += `translate3d(0, 0, ${zDepth}px)`;
-
-        backgroundElements.appendChild(element);
-      }
-    }
-
-    // ページが読み込まれた時に背景要素を生成
-    window.onload = generateBackgroundElements;
   </script>
 </body>
 </html>
