@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プロフィールページ</title>
+  <style>
+    /* 全体のレイアウト */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+
+    #app {
+      width: 80%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      color: #333;
+    }
+
+    .header p {
+      font-size: 1.5rem;
+      color: #666;
+    }
+
+    .social-links {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .social-icon {
+      width: 48px;
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .social-icon:hover {
+      transform: scale(1.2);
+    }
+
+    .profile {
+      margin-top: 40px;
+      background-color: #fff;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 30px auto;
+    }
+
+    #profile-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+
+    #profile-name {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    #profile-bio {
+      font-size: 1.2rem;
+      color: #666;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- ヘッダー -->
+    <div class="header">
+      <h1>My Profile</h1>
+      <p>Welcome to my personal profile page</p>
+    </div>
+
+    <!-- GitHub と YouTube のアイコン -->
+    <div class="social-links">
+      <img id="github-icon" class="social-icon" src="https://img.icons8.com/?size=48&id=AZOZNnY73haj&format=png" alt="GitHub Icon">
+      <img id="youtube-icon" class="social-icon" src="https://cdn-icons-png.flaticon.com/128/1384/1384028.png" alt="YouTube Icon">
+    </div>
+
+    <!-- GitHub プロフィール表示エリア -->
+    <div id="github-profile" class="profile">
+      <div id="profile-info">
+        <img id="profile-image" src="" alt="Profile Image">
+        <h2 id="profile-name"></h2>
+        <p id="profile-bio"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // GitHubのユーザー名を指定
+    const githubUsername = "Emon2358"; // ここにGitHubのユーザー名を入力
+
+    // GitHub APIのURL
+    const githubApiUrl = `https://api.github.com/users/${githubUsername}`;
+
+    // アイコンのクリックイベント
+    document.getElementById("github-icon").addEventListener("click", () => {
+      window.location.href = "https://github.com/Emon2358";
+    });
+
+    document.getElementById("youtube-icon").addEventListener("click", () => {
+      window.location.href = "https://www.youtube.com/@unkochan12345";
+    });
+
+    // GitHub APIからプロフィール情報を取得して表示
+    fetch(githubApiUrl)
+      .then(response => response.json())
+      .then(data => {
+        const profileImage = document.getElementById("profile-image");
+        const profileName = document.getElementById("profile-name");
+        const profileBio = document.getElementById("profile-bio");
+
+        // プロフィール画像、名前、自己紹介を更新
+        profileImage.src = data.avatar_url;
+        profileName.textContent = data.name || data.login; // 名前がない場合はユーザー名を表示
+        profileBio.textContent = data.bio || "自己紹介はありません"; // 自己紹介がない場合のデフォルト文
+      })
+      .catch(error => {
+        console.error("GitHub APIからのデータ取得に失敗しました:", error);
+      });
+  </script>
+</body>
+</html>
